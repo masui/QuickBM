@@ -40,4 +40,3 @@ get '/' do
   # リスト表示
   cookies[:name]
 end
-
