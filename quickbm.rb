@@ -89,10 +89,6 @@ get '/' do
   else
     # リスト表示
     @data = $bmdb.find({username: @username + "\t" + @password})
-    @data.each { |e|
-      puts "==================="
-      puts e
-    }
     erb :list
   end
 end
