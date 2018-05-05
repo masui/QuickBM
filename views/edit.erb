@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <TITLE>QuickBM data registration</TITLE>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <link href="/stylesheets/bootstrap.css" rel="stylesheet" media="screen">
     <link href="/stylesheets/memo.css" rel="stylesheet" media="screen">
-    <TITLE>QuickBM data registration</TITLE>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </head>
@@ -13,29 +13,6 @@
 
     <%= erb :form %>
 
-    <!--
-    <form name="postform" method="post" enctype="application/x-www-form-urlencoded" action="/register" class="form-horizontal">
-      <div class="control-group">
-	<label class="control-label">URL / Memo:</label>
-	<div class="controls">
-	  <input type="text" name="longname" placeholder="e.g. http://Google.com/" value='<%= @value %>' class="input-xxlarge">
-	</div>
-      </div>
-      <div class="control-group">
-	<label class="control-label">Description:</label>
-	<div class="controls">
-	  <input type="text" name="title" placeholder="e.g. Google search page" value='<%= @title %>' class="input-xxlarge">
-	</div>
-      </div>
-      
-      <div class="control-group">
-	<div class="controls">
-	  <button type="submit" class="btn btn-primary">Register</button>
-	</div>
-      </div>
-      <input name="shortname" type="hidden" value="<%= @shortname %>">
-    </form>
-    -->
   </body>
 </html>
 

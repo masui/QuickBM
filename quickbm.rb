@@ -8,7 +8,7 @@ require 'sinatra'
 require 'sinatra/cookies'
 require 'mongo'
 
-$episodb = Mongo::Client.new(ENV['MONGODB_URI'])[:quickbm]
+$bmdb = Mongo::Client.new(ENV['MONGODB_URI'])[:quickbm]
 
 configure do
   set :root, File.dirname(__FILE__)
@@ -25,13 +25,14 @@ post '/register' do
   if !username
     redirect "/login"
   end
-  $episodb.delete_many({user: username, name: name})
+  $bmdb.delete_many({user: username, name: name})
   d = {
     user: username,
     name: name,
-    longname: params['longname']
+    longname: params['longname'],
+    description: params['description']
   }
-  $episodb.insert_one(d)
+  $bmdb.insert_one(d)
   redirect '/'
 end
 
@@ -51,7 +52,7 @@ get '/:name' do |shortname|
     redirect "/login"
   else
     # 登録アドレスに飛ぶ
-    data = $episodb.find({user: username, name: shortname}).limit(1).first
+    data = $bmdb.find({user: username, name: shortname}).limit(1).first
     if data then
       redirect data['longname']
     else
@@ -73,7 +74,7 @@ get '/' do
     redirect "/login"
   else
     # リスト表示
-    @data = $episodb.find({user: username})
+    @data = $bmdb.find({user: username})
     erb :list
   end
 end
