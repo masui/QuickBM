@@ -19,25 +19,35 @@ configure do
   set :public_folder, settings.root + '/public'
 end
 
-# get '/set' do
-#   cookies[:test] = 'foobar'
-#   "Hello"
-# end
-# 
-# get '/get' do
-#   cookies[:test]
-# end
-
 get '/login' do
   erb :login
 end
 
-get '/:name!' do |shortname|
+post '/logined' do
+  cookies[:name] = params['id']
+  redirect '/'
+end
+
+post '/register' do
   username = cookies[:name]
   if !username
-    cookies[:name] = "masui"
-    redirect "/login.html"
+    redirect "/login"
+  end
+  d = {
+    user: username,
+    name: params['shortname'],
+    longname: params['longname']
+  }
+  $episodb.insert_one(d)
+  redirect '/'
+end
+
+get '/:name!' do |shortname|
+  @username = cookies[:name]
+  if !@username
+    redirect "/login"
   else
+    @shortname = shortname
     erb :edit
   end
 end
@@ -45,8 +55,7 @@ end
 get '/:name' do |shortname|
   username = cookies[:name]
   if !username
-    cookies[:name] = "masui"
-    redirect "/login.html"
+    redirect "/login"
   else
     # どこかに飛ぶ
     d = $episodb.find({user: username, name: shortname}).limit(1).first
@@ -61,11 +70,11 @@ end
 get '/' do
   username = cookies[:name]
   if !username
-    redirect "/login.html"
+    redirect "/login"
   else
-    $episodb.delete_many({user: username, name: 'test'})
-    d = { user: username, name: 'test', longname: 'http://pitecan.com' }
-    $episodb.insert_one(d)
+    #$episodb.delete_many({user: username, name: 'test'})
+    #d = { user: username, name: 'test', longname: 'http://pitecan.com' }
+    #$episodb.insert_one(d)
   end
   # リスト表示
   cookies[:name]

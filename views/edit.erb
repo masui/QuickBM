@@ -4,25 +4,17 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <link href="/stylesheets/bootstrap.css" rel="stylesheet" media="screen">
     <link href="/stylesheets/memo.css" rel="stylesheet" media="screen">
-    <TITLE><%= @title %></TITLE>
+    <TITLE>QuickBM data registration</TITLE>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </head>
   <body style="margin:5pt;">
-    <h3><a href="<%= @base %>/<%= @table %>/"><%= @root %></a> / <i class="keyword"><%= @id2 %></i></h3>
-    <form name="postform" method="post" enctype="application/x-www-form-urlencoded" action="." class="form-horizontal">
-      <% if @id == '' then %>
-      <div class="control-group">
-	<label class="control-label" for="short">Keyword:</label>
-	<div class="controls">
-	  <input type="text" name="id" placeholder = "e.g. gog" class="input-normal" value='<%= @id %>'>
-	</div>
-      </div>
-      <% end %>
+    <h3>Info for <i class="keyword"><%= @shortname %></i></h3>
+    <form name="postform" method="post" enctype="application/x-www-form-urlencoded" action="/register" class="form-horizontal">
       <div class="control-group">
 	<label class="control-label">URL / Memo:</label>
 	<div class="controls">
-	  <input type="text" name="long" placeholder="e.g. http://Google.com/" value='<%= @value %>' class="input-xxlarge">
+	  <input type="text" name="longname" placeholder="e.g. http://Google.com/" value='<%= @value %>' class="input-xxlarge">
 	</div>
       </div>
       <div class="control-group">
@@ -37,9 +29,7 @@
 	  <button type="submit" class="btn btn-primary">Register</button>
 	</div>
       </div>
-      <input name="register" type="hidden" value="1">
-      <input name="id" type="hidden" value="<%= @id %>">
-      <input name="table" type="hidden" value="<%= @table %>">
+      <input name="shortname" type="hidden" value="<%= @shortname %>">
     </form>
   </body>
 </html>
