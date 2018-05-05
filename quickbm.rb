@@ -12,6 +12,8 @@ require 'json'
 
 enable :cross_origin # Chrome拡張機能から読めるようにするため
 
+$episodb = Mongo::Client.new(ENV['MONGODB_URI'])[:quickbm]
+
 configure do
   set :root, File.dirname(__FILE__)
   set :public_folder, settings.root + '/public'
@@ -26,11 +28,20 @@ end
 #   cookies[:test]
 # end
 
-get '/:name' do
-  if !cookies[:name]
+get '/:name' do |shortname|
+  username = cookies[:name]
+  if !username
+    cookies[:name] = "masui"
     redirect "/login.html"
+  else
+    # どこかに飛ぶ
+    d = $episodb.find({user: username, name: shortname}).limit(1).first
+    if d then
+      redirect d['longname']
+    else
+      redirect "http://example.com"
+    end
   end
-  # どこかに飛ぶ
 end
 
 get '/' do
