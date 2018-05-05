@@ -6,11 +6,7 @@ $:.unshift File.expand_path 'lib', File.dirname(__FILE__)
 # 標準ライブラリ
 require 'sinatra'
 require 'sinatra/cookies'
-require 'sinatra/cross_origin'
 require 'mongo'
-require 'json'
-
-enable :cross_origin # Chrome拡張機能から読めるようにするため
 
 $episodb = Mongo::Client.new(ENV['MONGODB_URI'])[:quickbm]
 
@@ -30,12 +26,14 @@ end
 
 post '/register' do
   username = cookies[:name]
+  name = params['shortname']
   if !username
     redirect "/login"
   end
+  $episodb.delete_many({user: username, name: name})
   d = {
     user: username,
-    name: params['shortname'],
+    name: name,
     longname: params['longname']
   }
   $episodb.insert_one(d)
@@ -72,12 +70,8 @@ get '/' do
   if !username
     redirect "/login"
   else
-    #$episodb.delete_many({user: username, name: 'test'})
-    #d = { user: username, name: 'test', longname: 'http://pitecan.com' }
-    #$episodb.insert_one(d)
+    # リスト表示
     @data = $episodb.find({user: username})
     erb :list
   end
-  # リスト表示
-  #cookies[:name]
 end
