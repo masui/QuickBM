@@ -41,7 +41,10 @@ get '/:name!' do |shortname|
   if !@username
     redirect "/login"
   else
+    data = $bmdb.find({user: @username, name: shortname}).limit(1).first
     @shortname = shortname
+    @description = data['description']
+    @longname = data['longname']
     erb :edit
   end
 end
