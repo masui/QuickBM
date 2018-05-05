@@ -58,9 +58,9 @@ get '/:name' do |shortname|
     redirect "/login"
   else
     # どこかに飛ぶ
-    d = $episodb.find({user: username, name: shortname}).limit(1).first
-    if d then
-      redirect d['longname']
+    data = $episodb.find({user: username, name: shortname}).limit(1).first
+    if data then
+      redirect data['longname']
     else
       redirect "https://www.google.com/search?q=#{shortname}"
     end
@@ -75,7 +75,9 @@ get '/' do
     #$episodb.delete_many({user: username, name: 'test'})
     #d = { user: username, name: 'test', longname: 'http://pitecan.com' }
     #$episodb.insert_one(d)
+    @data = $episodb.find({user: username})
+    erb :list
   end
   # リスト表示
-  cookies[:name]
+  #cookies[:name]
 end
