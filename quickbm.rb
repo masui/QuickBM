@@ -19,11 +19,6 @@ get '/login' do
   erb :login
 end
 
-post '/logined' do
-  cookies[:name] = params['id']
-  redirect '/'
-end
-
 post '/register' do
   username = cookies[:name]
   name = params['shortname']
@@ -63,6 +58,13 @@ get '/:name' do |shortname|
       redirect "https://www.google.com/search?q=#{shortname}"
     end
   end
+end
+
+post '/' do
+  username = params['username']
+  redirect '/login' unless username
+  cookies[:name] = username
+  redirect '/'
 end
 
 get '/' do

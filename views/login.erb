@@ -12,11 +12,11 @@
     <p>
       名前を英数字で登録して下さい
     </p>
-    <form name="postform" method="post" enctype="application/x-www-form-urlencoded" action="/logined" class="form-horizontal">
+    <form name="postform" method="post" enctype="application/x-www-form-urlencoded" action="/" class="form-horizontal">
       <div class="control-group">
 	<label class="control-label" for="short">Name:</label>
 	<div class="controls">
-	  <input type="text" name="id" placeholder = "e.g. masui" class="input-normal" value='<%= "" %>'>
+	  <input type="text" name="username" placeholder = "e.g. masui" class="input-normal" value='<%= "" %>'>
 	</div>
       </div>
       <div class="control-group">
@@ -24,7 +24,6 @@
 	  <button type="submit" class="btn btn-primary">Register</button>
 	</div>
       </div>
-      <!-- <input name="register" type="hidden" value="1"> -->
     </form>
   </body>
 </html>
