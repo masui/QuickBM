@@ -16,8 +16,8 @@
 	<table class="table table-striped table-hover table-bordered table-condensed">
 	  <% @data.each { |e| %>
           <tr>
-	    <td class="span2"><%= e['name'] %></td>
-	    <td><%= e['longname'] %></td>
+	    <td class="span2"><a href="/<%= e['name'] %>!"><%= e['name'] %></a></td>
+	    <td><a href="%<= e['longname'] %>"><%= e['longname'] %></a></td>
 	  </tr>
 	  <% } %>
 	</table>
