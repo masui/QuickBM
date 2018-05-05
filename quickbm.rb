@@ -50,7 +50,7 @@ get '/:name' do |shortname|
   if !username
     redirect "/login"
   else
-    # どこかに飛ぶ
+    # 登録アドレスに飛ぶ
     data = $episodb.find({user: username, name: shortname}).limit(1).first
     if data then
       redirect data['longname']
@@ -60,7 +60,7 @@ get '/:name' do |shortname|
   end
 end
 
-post '/' do
+post '/' do # ログインフォームから
   username = params['username']
   redirect '/login' unless username
   cookies[:name] = username
