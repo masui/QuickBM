@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'sinatra', '~> 2.0.1'
 gem 'sinatra-cross_origin', '~> 0.4.0'
+gem 'sinatra-congrib'
 
 gem 'mongo', '~> 2.5.1'
 
