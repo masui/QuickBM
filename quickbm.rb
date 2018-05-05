@@ -28,6 +28,20 @@ end
 #   cookies[:test]
 # end
 
+get '/login' do
+  erb :login
+end
+
+get '/:name!' do |shortname|
+  username = cookies[:name]
+  if !username
+    cookies[:name] = "masui"
+    redirect "/login.html"
+  else
+    erb :edit
+  end
+end
+
 get '/:name' do |shortname|
   username = cookies[:name]
   if !username
@@ -39,14 +53,19 @@ get '/:name' do |shortname|
     if d then
       redirect d['longname']
     else
-      redirect "http://example.com"
+      redirect "https://www.google.com/search?q=#{shortname}"
     end
   end
 end
 
 get '/' do
-  if !cookies[:name]
+  username = cookies[:name]
+  if !username
     redirect "/login.html"
+  else
+    $episodb.delete_many({user: username, name: 'test'})
+    d = { user: username, name: 'test', longname: 'http://pitecan.com' }
+    $episodb.insert_one(d)
   end
   # リスト表示
   cookies[:name]

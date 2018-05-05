@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="/stylesheets/memo.css" rel="stylesheet" media="screen">
+    <TITLE><%= @title %></TITLE>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </head>
+  <body style="margin:5pt;">
+    <h3><a href="<%= @base %>/<%= @table %>/"><%= @root %></a> / <i class="keyword"><%= @id2 %></i></h3>
+    <form name="postform" method="post" enctype="application/x-www-form-urlencoded" action="." class="form-horizontal">
+      <% if @id == '' then %>
+      <div class="control-group">
+	<label class="control-label" for="short">Keyword:</label>
+	<div class="controls">
+	  <input type="text" name="id" placeholder = "e.g. gog" class="input-normal" value='<%= @id %>'>
+	</div>
+      </div>
+      <% end %>
+      <div class="control-group">
+	<label class="control-label">URL / Memo:</label>
+	<div class="controls">
+	  <input type="text" name="long" placeholder="e.g. http://Google.com/" value='<%= @value %>' class="input-xxlarge">
+	</div>
+      </div>
+      <div class="control-group">
+	<label class="control-label">Description:</label>
+	<div class="controls">
+	  <input type="text" name="title" placeholder="e.g. Google search page" value='<%= @title %>' class="input-xxlarge">
+	</div>
+      </div>
+      
+      <div class="control-group">
+	<div class="controls">
+	  <button type="submit" class="btn btn-primary">Register</button>
+	</div>
+      </div>
+      <input name="register" type="hidden" value="1">
+      <input name="id" type="hidden" value="<%= @id %>">
+      <input name="table" type="hidden" value="<%= @table %>">
+    </form>
+  </body>
+</html>
+
