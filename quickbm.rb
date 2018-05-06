@@ -62,11 +62,12 @@ get '/:name!' do |shortname|
 end
 
 get '/:name' do |shortname|
+  puts "-----------------------"
   getcookie
   data = $bmdb.find({username: username, shortname: shortname}).limit(1).first
 
   # if request.env['HTTP_REFERER'] =~ /QuickBM\.com/i
-  if request.env['HTTP_REFERER'].include?(request.env['HTTP_HOST'])
+  if request.env['HTTP_REFERER'].to_s.include?(request.env['HTTP_HOST'])
     if data
       @shortname = shortname
       @description = data['description']
