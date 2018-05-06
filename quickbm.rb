@@ -15,20 +15,26 @@ configure do
   set :public_folder, settings.root + '/public'
 end
 
+def username
+  @username + "\t" + @password
+end
+
+def getcookie
+  @username = cookies[:username].to_s
+  @password = cookies[:password].to_s
+  redirect "/_login" if @username == ''
+end
+
 get '/_login' do
   erb :login
 end
 
 post '/_register' do
-  @username = cookies[:username].to_s
-  @password = cookies[:password].to_s
+  getcookie
   shortname = params['shortname']
-  if @username == ''
-    redirect "/_login"
-  end
-  $bmdb.delete_many({username: @username + "\t" + @password, shortname: shortname})
+  $bmdb.delete_many({username: username, shortname: shortname})
   d = {
-    username: @username + "\t" + @password,
+    username: username,
     shortname: shortname,
     longname: params['longname'],
     description: params['description']
@@ -38,47 +44,30 @@ post '/_register' do
 end
 
 get '/_edit' do
-  @username = cookies[:username].to_s
-  @password = cookies[:password].to_s
-  if @username == ''
-    redirect "/_login"
-  else
-    @description = params['description']
-    @longname = params['longname']
-    erb :edit
-  end
+  getcookie
+  @description = params['description']
+  @longname = params['longname']
+  erb :edit
 end
 
 get '/:name!' do |shortname|
-  @username = cookies[:username].to_s
-  @password = cookies[:password].to_s
-  if @username == ''
-    redirect "/_login"
-  else
-    data = $bmdb.find({username: @username + "\t" + @password, shortname: shortname}).limit(1).first
-    if data
-      @shortname = shortname
-      @description = data['description']
-      @longname = data['longname']
-    end
-    erb :edit
+  getcookie
+  data = $bmdb.find({username: username, shortname: shortname}).limit(1).first
+  if data
+    @shortname = shortname
+    @description = data['description']
+    @longname = data['longname']
   end
+  erb :edit
 end
 
 get '/:name' do |shortname|
-  @username = cookies[:username].to_s
-  @password = cookies[:password].to_s
-  @shortname = shortname
-  if @username == ''
-    redirect "/_login"
+  getcookie
+  data = $bmdb.find({username: username, shortname: shortname}).limit(1).first
+  if data then
+    redirect data['longname']
   else
-    # 登録アドレスに飛ぶ
-    data = $bmdb.find({username: @username + "\t" + @password, shortname: shortname}).limit(1).first
-    if data then
-      redirect data['longname']
-    else
-      redirect "https://www.google.com/search?q=#{shortname}"
-    end
+    redirect "https://www.google.com/search?q=#{shortname}"
   end
 end
 
@@ -92,15 +81,8 @@ post '/' do # ログインフォームから
 end
 
 get '/' do
-  @username = cookies[:username].to_s
-  @password = cookies[:password].to_s
-  puts "username = #{@username}"
-  puts "password = #{@password}"
-  if @username == ''
-    redirect "/_login"
-  else
-    # リスト表示
-    @data = $bmdb.find({username: @username + "\t" + @password})
-    erb :list
-  end
+  getcookie
+  # リスト表示
+  @data = $bmdb.find({username: username})
+  erb :list
 end
