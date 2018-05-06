@@ -3,7 +3,6 @@
 
 $:.unshift File.expand_path 'lib', File.dirname(__FILE__)
 
-# 標準ライブラリ
 require 'sinatra'
 require 'sinatra/cookies'
 require 'mongo'
@@ -62,11 +61,9 @@ get '/:name!' do |shortname|
 end
 
 get '/:name' do |shortname|
-  puts "-----------------------"
   getcookie
   data = $bmdb.find({username: username, shortname: shortname}).limit(1).first
 
-  # if request.env['HTTP_REFERER'] =~ /QuickBM\.com/i
   if request.env['HTTP_REFERER'].to_s.include?(request.env['HTTP_HOST'])
     if data
       @shortname = shortname
@@ -84,11 +81,9 @@ get '/:name' do |shortname|
 end
 
 post '/' do # ログインフォームから
-  @username = params['username'].to_s
-  @password = params['password'].to_s
-  redirect '/_login' if @username == ''
-  cookies[:username] = @username
-  cookies[:password] = @password
+  cookies[:username] = params['username'].to_s
+  cookies[:password] = params['password'].to_s
+  getcookie
   redirect '/'
 end
 
