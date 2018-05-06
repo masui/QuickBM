@@ -21,7 +21,7 @@
 	  %>
             <% if e['longname'].to_s != ''&& e['shortname'].to_s != '' %>
               <tr>
-                <td class="span2"><a href="/<%= e['shortname'] %>!"><%= e['shortname'] %></a></td>
+                <td class="span2"><a href="/<%= e['shortname'] %>"><%= e['shortname'] %></a></td>
                 <% if e['longname'] =~ /^http/ %>
                   <td><a href="<%= e['longname'] %>"><%= e['longname'] %></a></td>
                 <% else %>
