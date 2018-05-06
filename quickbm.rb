@@ -63,11 +63,22 @@ end
 
 get '/:name' do |shortname|
   getcookie
+
   data = $bmdb.find({username: username, shortname: shortname}).limit(1).first
-  if data then
-    redirect data['longname']
+
+  if request.env['HTTP_REFERER'] =~ /QuickBM\.com/i
+    if data
+      @shortname = shortname
+      @description = data['description']
+      @longname = data['longname']
+    end
+    erb :edit
   else
-    redirect "https://www.google.com/search?q=#{shortname}"
+    if data then
+      redirect data['longname']
+    else
+      redirect "https://www.google.com/search?q=#{shortname}"
+    end
   end
 end
 
