@@ -15,16 +15,16 @@ configure do
   set :public_folder, settings.root + '/public'
 end
 
-get '/login' do
+get '/_login' do
   erb :login
 end
 
-post '/register' do
+post '/_register' do
   @username = cookies[:username].to_s
   @password = cookies[:password].to_s
   shortname = params['shortname']
   if @username == ''
-    redirect "/login"
+    redirect "/_login"
   end
   $bmdb.delete_many({username: @username + "\t" + @password, shortname: shortname})
   d = {
@@ -37,11 +37,23 @@ post '/register' do
   redirect '/'
 end
 
+get '/_edit' do
+  @username = cookies[:username].to_s
+  @password = cookies[:password].to_s
+  if @username == ''
+    redirect "/_login"
+  else
+    @description = params['description']
+    @longname = params['longname']
+    erb :edit
+  end
+end
+
 get '/:name!' do |shortname|
   @username = cookies[:username].to_s
   @password = cookies[:password].to_s
   if @username == ''
-    redirect "/login"
+    redirect "/_login"
   else
     data = $bmdb.find({username: @username + "\t" + @password, shortname: shortname}).limit(1).first
     if data
@@ -58,7 +70,7 @@ get '/:name' do |shortname|
   @password = cookies[:password].to_s
   @shortname = shortname
   if @username == ''
-    redirect "/login"
+    redirect "/_login"
   else
     # 登録アドレスに飛ぶ
     data = $bmdb.find({username: @username + "\t" + @password, shortname: shortname}).limit(1).first
@@ -73,7 +85,7 @@ end
 post '/' do # ログインフォームから
   @username = params['username'].to_s
   @password = params['password'].to_s
-  redirect '/login' if @username == ''
+  redirect '/_login' if @username == ''
   cookies[:username] = @username
   cookies[:password] = @password
   redirect '/'
@@ -85,7 +97,7 @@ get '/' do
   puts "username = #{@username}"
   puts "password = #{@password}"
   if @username == ''
-    redirect "/login"
+    redirect "/_login"
   else
     # リスト表示
     @data = $bmdb.find({username: @username + "\t" + @password})
