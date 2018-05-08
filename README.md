@@ -13,5 +13,9 @@
     <a href="http://QuickBM.com/map"><code>http://QuickBM.com/map</code></a>
     のようなURLでGoogle地図にアクセスできます
   </li>
+  <li>
+    QuickBMをChromeの標準検索として指定しておくと、
+    URL枠で<code>map</code>などと入力して登録URLに飛ぶことができます
+  </li>
   <li>詳細は<a href="https://scrapbox.io/QuickBM">こちら</a></li>
 </ul>
