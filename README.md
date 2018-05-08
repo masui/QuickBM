@@ -17,5 +17,8 @@
     QuickBMをChromeの標準検索として指定しておくと、
     URL枠で<code>map</code>などと入力して登録URLに飛ぶことができます
   </li>
+  <li>
+    Enjoy <a href="http://QuickBM.com/">http://QuickBM.com</a> !!
+  </li>
   <li>詳細は<a href="https://scrapbox.io/QuickBM">こちら</a></li>
 </ul>
