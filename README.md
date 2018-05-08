@@ -15,5 +15,5 @@
     <a href="http://QuickBM.com/map"><code>http://QuickBM.com/map</code></a>
     のようなURLでGoogle地図にアクセスできます
   </li>
-  <li>詳細は<a href="https://scrapbox.io/QuickBM">こちら</li>
+  <li>詳細は<a href="https://scrapbox.io/QuickBM">こちら</a></li>
 </ul>
