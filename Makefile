@@ -15,4 +15,4 @@ backup:
 	cd backups; make
 
 favicon:
-	convert favicon.png -define icon:auto-resize=64,32,16 favicon.ico
+	convert favicon.png -define icon:auto-resize=64,32,16 public/favicon.ico
