@@ -19,7 +19,7 @@
   </li>
   <li>
    ブックマークレット:
-   <a href="javascript:(function(){var%20w=window.open();var%20desc=window.getSelection();if(desc=='')desc=document.title;var%20url=document.location.href;w.location.href='http://QuickBM.com/_edit?longname='+escape(url)+'&description='+encodeURIComponent(desc);})()">QuickBM登録</a>
+   <a href="javascript:(function(){var%20w=window.open();var%20desc=window.getSelection();if(desc=='')desc=document.title;var%20url=document.location.href;w.location.href='http://QuickBM.com/_edit?longname='+escape(url)+'&description='+encodeURIComponent(desc);})()">QuickBM登録</a> (左のリンクをブックマークバーにDrag&Dropして下さい)
   </li>
   <li>
     Enjoy <a href="http://QuickBM.com/">http://QuickBM.com</a> !!
