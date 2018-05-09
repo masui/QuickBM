@@ -18,6 +18,10 @@
     URL枠で<code>map</code>などと入力して登録URLに飛ぶことができます
   </li>
   <li>
+   ブックマークレット:
+   <a href="javascript:(function(){var%20w=window.open();var%20desc=window.getSelection();if(desc=='')desc=document.title;var%20url=document.location.href;w.location.href='http://QuickBM.com/_edit?longname='+escape(url)+'&description='+encodeURIComponent(desc);})()">QuickBM登録</a>
+  </li>
+  <li>
     Enjoy <a href="http://QuickBM.com/">http://QuickBM.com</a> !!
   </li>
   <li>詳細は<a href="https://scrapbox.io/QuickBM">こちら</a></li>
