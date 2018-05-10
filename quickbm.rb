@@ -8,7 +8,7 @@ require 'sinatra/cookies'
 require 'mongo'
 require 'json'
 require 'digest/md5'
-require 'cgi'
+# require 'cgi'
 
 $bmdb = Mongo::Client.new(ENV['MONGODB_URI'])[:quickbm]
 
@@ -103,7 +103,8 @@ get '/*' do
     if data then
       redirect data['longname']
     else
-      redirect "https://www.google.com/search?q=#{CGI.escape(shortname)}"
+      # redirect "https://www.google.com/search?q=#{CGI.escape(shortname)}"
+      redirect "https://www.google.com/search?q=#{shortname}"
     end
   end
 end
