@@ -8,7 +8,6 @@ require 'sinatra/cookies'
 require 'mongo'
 require 'json'
 require 'digest/md5'
-# require 'cgi'
 
 $bmdb = Mongo::Client.new(ENV['MONGODB_URI'])[:quickbm]
 
@@ -86,9 +85,8 @@ get '/' do
   erb :list
 end
 
-# get '/:name' do |shortname|
 get '/*' do
-  shortname = params['splat'].join('/')
+  shortname = params['splat'].join('/') # a/b みたいなのを許す
   getcookie
   data = $bmdb.find({hash: @hash, shortname: shortname}).limit(1).first
 
