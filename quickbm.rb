@@ -8,6 +8,7 @@ require 'sinatra/cookies'
 require 'mongo'
 require 'json'
 require 'digest/md5'
+require 'cgi'
 
 $bmdb = Mongo::Client.new(ENV['MONGODB_URI'])[:quickbm]
 
@@ -71,7 +72,23 @@ get '/:name!' do |shortname|
   erb :edit
 end
 
-get '/:name' do |shortname|
+post '/' do # ログインフォームから
+  cookies[:username] = params['username'].to_s
+  cookies[:hash] = Digest::MD5.hexdigest(params['username'].to_s + params['password'].to_s)
+  getcookie
+  redirect '/'
+end
+
+get '/' do
+  getcookie
+  # リスト表示
+  @data = $bmdb.find({hash: @hash})
+  erb :list
+end
+
+# get '/:name' do |shortname|
+get '/*' do
+  shortname = params['splat'].join('/')
   getcookie
   data = $bmdb.find({hash: @hash, shortname: shortname}).limit(1).first
 
@@ -86,21 +103,8 @@ get '/:name' do |shortname|
     if data then
       redirect data['longname']
     else
-      redirect "https://www.google.com/search?q=#{shortname}"
+      redirect "https://www.google.com/search?q=#{CGI.escape(shortname)}"
     end
   end
 end
 
-post '/' do # ログインフォームから
-  cookies[:username] = params['username'].to_s
-  cookies[:hash] = Digest::MD5.hexdigest(params['username'].to_s + params['password'].to_s)
-  getcookie
-  redirect '/'
-end
-
-get '/' do
-  getcookie
-  # リスト表示
-  @data = $bmdb.find({hash: @hash})
-  erb :list
-end
